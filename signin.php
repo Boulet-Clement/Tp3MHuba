@@ -1,12 +1,12 @@
 <?php 
-		session_start();
-		if($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_SESSION['login'])){
-			/* Afficher le formulaire */
-		}else{
-			/* Ne pas afficher le formulaire */
-			/* Renvoyer vers une page d'erreur? */ 
-			header('Location: index.php');
-		}
+session_start();
+if($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_SESSION['login'])){
+	// Afficher le formulaire
+}else{
+	// Ne pas afficher le formulaire 
+	// Renvoyer vers une page d'erreur? 
+	header('Location: index.php');
+}
 	?>
 <!DOCTYPE html>
 <html>

@@ -3,7 +3,7 @@ session_start();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     require('bdd.php'); /* Fichier contenant nos identifiants à la base de données */
 
-    if ( isset($_POST['password']) && isset($_POST['confirm_password']) )
+    if ( isset($_POST['password']) && isset($_POST['confirm_password']) && $_POST['password']!=="" && $_POST['confirm_password']!=="" )
     {
         try{
             $pdo = new PDO("mysql:host=".HOST.";dbname=".DBNAME, USERNAME, PASSWORD);

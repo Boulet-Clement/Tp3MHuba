@@ -3,7 +3,7 @@ session_start();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     require('bdd.php'); /* Fichier contenant nos identifiants à la base de données */
 
-    if ( isset($_POST['login']) && isset($_POST['password']) && isset($_POST['confirm_password']) )
+    if ( isset($_POST['login']) && isset($_POST['password']) && isset($_POST['confirm_password']) && $_POST['password']!=="" )
     {
         try{
             $pdo = new PDO("mysql:host=".HOST.";dbname=".DBNAME, USERNAME, PASSWORD);
@@ -55,6 +55,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
         
     }else{
+        $_SESSION['message']="Please complete all fields";
         // ERREUR, On redirige vers signup.php si il manque un paramètre
         header('Location: signup.php');
     }

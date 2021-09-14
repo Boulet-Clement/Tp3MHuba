@@ -25,7 +25,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
 
         $result_login = $verif_login->fetch();
-        if($verif_login!=null){
+        if($result_login!=null){
             if(password_verify($password,$result_login['password'])){
                 $_SESSION['login']=$result_login['login'];
                 $_SESSION['message']=""; // On vide les messages
