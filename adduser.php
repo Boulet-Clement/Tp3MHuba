@@ -1,6 +1,6 @@
 <?php
+session_start();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    session_start();
     require('bdd.php'); /* Fichier contenant nos identifiants à la base de données */
 
     if ( isset($_POST['login']) && isset($_POST['password']) && isset($_POST['confirm_password']) )
@@ -9,9 +9,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $pdo = new PDO("mysql:host=".HOST.";dbname=".DBNAME, USERNAME, PASSWORD);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }catch(PDOException $e){
-            $_SESSION['message']="Une erreur est survenue lors de la création de votre compte";
+            $_SESSION['message']="Une erreur est survenue lors de la connexion à la base de données";
             /* ERREUR, on redirige vers signup */
-            header('Location: signun.php');
+            header('Location: signup.php');
         }
         
 
@@ -29,15 +29,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     $tentative_inscription = $pdo->prepare("INSERT INTO users (login, password) VALUES (:login, :password)");
                     $tentative_inscription->bindParam(':login', $login);
                     $tentative_inscription->bindParam(':password', $password);
-                    $tentative_inscription->execute();
 
-                    $_SESSION['message']="Votre compte à bien été enregistré"; // Ici j'aimerais que le message s'affiche en vert
-                    // Tout est bon, on redirige vers la page de connexion
+                    try{
+                        $tentative_inscription->execute();
+                    }catch(PDOException $e){
+                        $_SESSION['message']="Une erreur est survenue lors de la création de votre compte";
+                        // ERREUR, on redirige vers la page d'inscription
+                        header('Location: signup.php');
+                    }
+
+                    $_SESSION['message']=""; // On vide les messages
+                    // Succès, on redirige vers la page de connexion
                     header('Location: signin.php');             
 
             }else{
                 $_SESSION['message']="This login already exist"; //Verifier l'orthographe
-                // ERREUR, On redirige si le login est déjà prit
+                // ERREUR, On redirige si le login est déjà utilisé
                 header('Location: signup.php');
         }
 
@@ -48,11 +55,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
         
     }else{
-        // ERREUR, On redirige vers signin.php si il manque un paramètre
-        header('Location: signin.php');
+        // ERREUR, On redirige vers signup.php si il manque un paramètre
+        header('Location: signup.php');
     }
 }else{
-    /* ERREUR, On redirige vers signin.php si ce n'est pas la méthode POST */
-    header('Location: signin.php');
+    /* ERREUR, On redirige vers index.php si ce n'est pas la méthode POST */
+    header('Location: index.php');
 }
 ?>

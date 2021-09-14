@@ -1,6 +1,6 @@
 <?php
+session_start();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    session_start();
     require('bdd.php'); // Fichier contenant nos identifiants à la base de données 
 
     if ( isset($_POST['login']) && isset($_POST['password']) )
@@ -16,12 +16,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $verif_login=$pdo->prepare("SELECT * FROM users WHERE login=:user");
         $verif_login->bindParam(":user",$login);
-        $verif_login->execute();
+
+        try{
+            $verif_login->execute();
+        }catch(PDOException $e){
+            $_SESSION['message']="Une erreur est survenue lors de l'authentification";
+            header('Location: signin.php');
+        }
+
         $result_login = $verif_login->fetch();
         if($verif_login!=null){
             if(password_verify($password,$result_login['password'])){
                 $_SESSION['login']=$result_login['login'];
-                // Succès, redirection vers la page d'accueil
+                $_SESSION['message']=""; // On vide les messages
+                // Succès, redirection vers la page de bienvenue
                 header('Location: welcome.php');
             }else{
                 // Erreur, mot de passe incorrect

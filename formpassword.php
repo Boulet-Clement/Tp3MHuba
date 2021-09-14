@@ -1,13 +1,12 @@
 <?php 
-		session_start();
-		if($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_SESSION['login'])){
-			/* Afficher le formulaire */
-		}else{
-			/* Ne pas afficher le formulaire */
-			/* Renvoyer vers une page d'erreur? */ 
-			header('Location: index.php');
-		}
-	?>
+	session_start();
+	if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_SESSION['login'])){
+		/* Afficher le formulaire */
+	}else{
+		// Renvoie vers le formulaire de connexion
+		header('Location: signin.php');
+	}
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -32,21 +31,21 @@
 					}
 				?>
 			</div>
-			<h1>Signin</h1>
-			<form action="authenticate.php" method="POST" id="auth_form">
+			<h1>Change password</h1>
+			<form action="changepassword.php" method="POST" id="form_change_password">
 			<div class="row">
 				<div class="input-field col s3">
-					<input placeholder="Login" id="input_login" type="text" class="validate" name="login">
-					<label for="input_login">Login</label>
-				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s3">
-					<input placeholder="Password" id="input_password" type="password" class="validate" name="password">
+					<input placeholder="New Password" id="input_password" type="password" class="validate" name="password">
 					<label for="input_password">Password</label>
 				</div>
 			</div>
-				<input type="submit" value="Connect me" class="btn">
+            <div class="row">
+				<div class="input-field col s3">
+					<input placeholder="Confirm New Password" id="input_confirm_password" type="password" class="validate" name="confirm_password">
+					<label for="input_confirm_password">Confirm Password</label>
+				</div>
+			</div>
+				<input type="submit" value="Change password" class="btn">
 			</form>
 		</div>
 	</body>

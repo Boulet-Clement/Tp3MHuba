@@ -1,13 +1,12 @@
 <?php 
-		session_start();
-		if($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_SESSION['login'])){
-			/* Afficher le formulaire */
-		}else{
-			/* Ne pas afficher le formulaire */
-			/* Renvoyer vers une page d'erreur? */ 
-			header('Location: index.php');
-		}
-	?>
+session_start();
+if($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_SESSION['login'])){
+	/* Afficher le formulaire */
+}else{
+	//Ne pas afficher le formulaire
+	header('Location: index.php');
+}
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -42,13 +41,13 @@
 			</div>
 			<div class="row">
 				<div class="input-field col s3">
-					<input placeholder="Password" id="input_password" type="text" class="validate" name="password">
+					<input placeholder="Password" id="input_password" type="password" class="validate" name="password">
 					<label for="input_password">Password</label>
 				</div>
 			</div>
             <div class="row">
 				<div class="input-field col s3">
-					<input placeholder="Confirm Password" id="input_confirm_password" type="text" class="validate" name="confirm_password">
+					<input placeholder="Confirm Password" id="input_confirm_password" type="password" class="validate" name="confirm_password">
 					<label for="input_confirm_password">Password</label>
 				</div>
 			</div>

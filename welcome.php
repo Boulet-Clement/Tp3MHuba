@@ -31,6 +31,14 @@
         <div class="container">
             <h1><?php echo 'Hello '. $_SESSION['login'].' !<br/>'; ?></h1>
             <p>Welcome on your account.</p>
+            <div class="row">
+                <div class="input-field col s3">
+                    <a href="formpassword.php" class="btn">Change password</a>
+				</div>
+                <div class="input-field col s3">
+                    <a href="deleteuser.php" class="btn">Delete user</a>
+				</div>
+            </div>
         </div>
         
     </body>
